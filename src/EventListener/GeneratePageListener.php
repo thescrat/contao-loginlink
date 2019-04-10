@@ -130,28 +130,23 @@ class GeneratePageListener
             }
 
             $this->loginUser($objMember->username);
-
-            if(Input::get('redirect')) {
-                $objRedirectPage = PageModel::findOneByAlias(Input::get('redirect'));
-                Controller::redirect($objRedirectPage->getAbsoluteUrl());
-            }
-
-            if($pageModel->loginlink_jumpTo) {
-                $objRedirectPage = PageModel::findOneById($pageModel->loginlink_jumpTo);
-                Controller::redirect($objRedirectPage->getAbsoluteUrl());
-            }
-
-            // default redirect without key parameter
-            Controller::redirect(Controller::addToUrl('',false,['key']));
         }
+
+        if(Input::get('redirect')) {
+            $objRedirectPage = PageModel::findOneByAlias(Input::get('redirect'));
+            Controller::redirect($objRedirectPage->getAbsoluteUrl());
+        }
+
+        if($pageModel->loginlink_jumpTo) {
+            $objRedirectPage = PageModel::findOneById($pageModel->loginlink_jumpTo);
+            Controller::redirect($objRedirectPage->getAbsoluteUrl());
+        }
+
+        // default redirect without key parameter
+        Controller::redirect(Controller::addToUrl('',false,['key']));
     }
 
-    /**
-     * Within the registration process, log in the user if needed.
-     *
-     * @param int   $userId The user id
-     * @param array $data   The user data of the registration module
-     */
+
     public function onCreateNewUser(int $userId, array $data): void
     {
         global $objPage;
