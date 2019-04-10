@@ -1,0 +1,45 @@
+{
+    "name": "thescrat/contao-loginlink",
+    "description": "Mitglied wird mit einem Key / Token eingeloggt.",
+    "type": "contao-bundle",
+    "license": "MIT",
+    "authors":[
+        {
+            "name":"Michael Fleischmann"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/thescrat/contao-loginlink/issues",
+        "source": "https://github.com/thescrat/contao-loginlink",
+        "forum": "https://community.contao.org"
+    },
+    "require": {
+        "php": "^7.1",
+        "contao/core-bundle": "^4.5",
+        "doctrine/dbal": "^2.7",
+        "psr/log": "^1.0",
+        "symfony/config": "^3.3 || ^4.0",
+        "symfony/dependency-injection": "^3.3 || ^4.0",
+        "symfony/event-dispatcher": "^3.3 || ^4.0",
+        "symfony/http-foundation": "^3.3 || ^4.0",
+        "symfony/http-kernel": "^3.3 || ^4.0",
+        "symfony/security-core": "^3.3 || ^4.0",
+        "symfony/security-http": "^3.3 || ^4.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "~2.0",
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "php-http/guzzle6-adapter": "^1.1"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "thescrat\\LoginLinkBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "thescrat\\LoginLinkBundle\\ContaoManager\\Plugin"
+    }
+}

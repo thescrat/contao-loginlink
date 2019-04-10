@@ -1,0 +1,17 @@
+services:
+    thescrat.loginlink.listener.generatepage:
+        class: thescrat\LoginLinkBundle\EventListener\GeneratePageListener
+        arguments:
+            - '@contao.security.frontend_user_provider'
+            - '@security.token_storage'
+            - '@database_connection'
+            - '@logger'
+            - '@event_dispatcher'
+            - '@request_stack'
+            - '@contao.security.user_checker'
+            - '@contao.security.authentication_success_handler'
+            - '@contao.security.token_checker'
+        tags:
+            - { name: 'contao.hook', hook: 'generatePage' }
+            - { name: 'contao.hook', hook: 'createNewUser' }
+            - { name: 'monolog.logger', channel: 'thescrat_loginlink' }
