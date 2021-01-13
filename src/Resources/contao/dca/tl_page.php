@@ -6,12 +6,15 @@
 $GLOBALS['TL_DCA']['tl_page']['palettes']['__selector__'][] = 'loginlink';
 $GLOBALS['TL_DCA']['tl_page']['subpalettes']['loginlink'] = 'loginlink_length,loginlink_jumpTo';
 
-\Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-    ->addLegend('loginlink_legend', 'layout_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE, true)
+$palette = \Contao\CoreBundle\DataContainer\PaletteManipulator::create()
+    ->addLegend('loginlink_legend', 'protected_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_BEFORE, true)
     ->addField(['loginlink'], 'loginlink_legend', \Contao\CoreBundle\DataContainer\PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('root', 'tl_page')
 ;
 
+if (isset($GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'])) {
+    $palette->applyToPalette('rootfallback', 'tl_page');
+}
 
 /**
  * Fields
