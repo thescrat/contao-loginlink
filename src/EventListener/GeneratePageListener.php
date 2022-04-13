@@ -9,7 +9,7 @@
  * @link       http://github.com/thescrat/contao-loginlink
  */
 
-namespace thescrat\LoginLinkBundle\EventListener;
+namespace Thescrat\LoginLinkBundle\EventListener;
 
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
@@ -19,6 +19,7 @@ use Contao\Input;
 use Contao\Controller;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -85,14 +86,15 @@ class GeneratePageListener
     /**
      * RegistrationListener constructor.
      *
-     * @param UserProviderInterface                 $userProvider
-     * @param TokenStorageInterface                 $tokenStorage
-     * @param Connection                            $connection
-     * @param LoggerInterface                       $logger
-     * @param EventDispatcherInterface              $eventDispatcher
-     * @param RequestStack                          $requestStack
-     * @param UserCheckerInterface                  $userChecker
+     * @param UserProviderInterface $userProvider
+     * @param TokenStorageInterface $tokenStorage
+     * @param Connection $connection
+     * @param LoggerInterface $logger
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param RequestStack $requestStack
+     * @param UserCheckerInterface $userChecker
      * @param AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
+     * @param TokenChecker $tokenChecker
      */
     public function __construct(UserProviderInterface $userProvider, TokenStorageInterface $tokenStorage, Connection $connection, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher, RequestStack $requestStack, UserCheckerInterface $userChecker, AuthenticationSuccessHandlerInterface $authenticationSuccessHandler, TokenChecker $tokenChecker)
     {
@@ -159,13 +161,17 @@ class GeneratePageListener
 
         $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,$pageModel->loginlink_length);
 
-        $this->connection->createQueryBuilder()
-            ->update('tl_member')
-            ->set('loginLink', ':loginLink')
-            ->where('id=:id')
-            ->setParameter('id', $userId)
-            ->setParameter(':loginLink', $strLoginLink)
-            ->execute();
+        try {
+            $this->connection->createQueryBuilder()
+                ->update('tl_member')
+                ->set('loginLink', ':loginLink')
+                ->where('id=:id')
+                ->setParameter('id', $userId)
+                ->setParameter(':loginLink', $strLoginLink)
+                ->executeQuery();
+        } catch (Exception $e) {
+            return;
+        }
     }
 
 
@@ -177,8 +183,8 @@ class GeneratePageListener
     private function loginUser(string $username)
     {
         try {
-            $user = $this->userProvider->loadUserByUsername($username);
-        } catch (UsernameNotFoundException $exception) {
+            $user = $this->userProvider->loadUserByIdentifier($username);
+        } catch (UserNotFoundException $exception) {
             return;
         }
 
@@ -198,19 +204,12 @@ class GeneratePageListener
 
 
         $event = new InteractiveLoginEvent($this->requestStack->getCurrentRequest(), $usernamePasswordToken);
-        $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
+        $this->eventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
 
         $this->logger->log(
             LogLevel::INFO,
             'User "'.$username.'" was logged in by LoginLink',
             ['contao' => new ContaoContext(__METHOD__, TL_ACCESS)]
         );
-
-        /*$this->authenticationSuccessHandler->onAuthenticationSuccess(
-            $this->requestStack->getCurrentRequest(),
-            $usernamePasswordToken
-        );*/
-
-        return;
     }
 }

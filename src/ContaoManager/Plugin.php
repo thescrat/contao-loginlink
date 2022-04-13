@@ -9,13 +9,13 @@
  * @link       http://github.com/thescrat/contao-loginlink
  */
 
-namespace thescrat\LoginLinkBundle\ContaoManager;
+namespace Thescrat\LoginLinkBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use thescrat\LoginLinkBundle\thescratLoginLinkBundle;
+use Thescrat\LoginLinkBundle\ThescratLoginLinkBundle;
 
 class Plugin implements BundlePluginInterface
 {
@@ -25,7 +25,7 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create(thescratLoginLinkBundle::class)
+            BundleConfig::create(ThescratLoginLinkBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class])
                 ->setReplace(['loginlink']),
         ];

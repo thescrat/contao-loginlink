@@ -14,17 +14,9 @@
         "forum": "https://community.contao.org"
     },
     "require": {
-        "php": "^7.1",
-        "contao/core-bundle": "^4.5",
-        "doctrine/dbal": "^2.7",
-        "psr/log": "^1.0",
-        "symfony/config": "^3.3 || ^4.0",
-        "symfony/dependency-injection": "^3.3 || ^4.0",
-        "symfony/event-dispatcher": "^3.3 || ^4.0",
-        "symfony/http-foundation": "^3.3 || ^4.0",
-        "symfony/http-kernel": "^3.3 || ^4.0",
-        "symfony/security-core": "^3.3 || ^4.0",
-        "symfony/security-http": "^3.3 || ^4.0"
+        "php": "^7.4 | ^8.0",
+        "contao/core-bundle": "^4.13",
+        "psr/log": "^1.0"
     },
     "require-dev": {
         "contao/manager-plugin": "~2.0",
@@ -36,10 +28,10 @@
     },
     "autoload": {
         "psr-4": {
-            "thescrat\\LoginLinkBundle\\": "src/"
+            "Thescrat\\LoginLinkBundle\\": "src/"
         }
     },
     "extra": {
-        "contao-manager-plugin": "thescrat\\LoginLinkBundle\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Thescrat\\LoginLinkBundle\\ContaoManager\\Plugin"
     }
 }
