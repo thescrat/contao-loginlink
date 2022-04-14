@@ -1,6 +1,6 @@
 services:
     thescrat.loginlink.listener.generatepage:
-        class: thescrat\LoginLinkBundle\EventListener\GeneratePageListener
+        class: Thescrat\LoginLinkBundle\EventListener\GeneratePageListener
         arguments:
             - '@contao.security.frontend_user_provider'
             - '@security.token_storage'

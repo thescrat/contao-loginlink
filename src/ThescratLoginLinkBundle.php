@@ -9,10 +9,10 @@
  * @link       http://github.com/thescrat/contao-loginlink
  */
 
-namespace thescrat\LoginLinkBundle;
+namespace Thescrat\LoginLinkBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class thescratLoginLinkBundle extends Bundle
+class ThescratLoginLinkBundle extends Bundle
 {
 }

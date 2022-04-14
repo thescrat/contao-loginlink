@@ -9,14 +9,14 @@
  * @link       http://github.com/thescrat/contao-loginlink
  */
 
-namespace thescrat\LoginLinkBundle\DependencyInjection;
+namespace Thescrat\LoginLinkBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class thescratLoginLinkExtension extends Extension
+class ThescratLoginLinkExtension extends Extension
 {
     /**
      * {@inheritdoc}
