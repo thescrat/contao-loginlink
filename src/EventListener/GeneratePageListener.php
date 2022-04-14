@@ -1,14 +1,5 @@
 <?php
 
-/*
- * LoginLink extension for Contao Open Source CMS
- *
- * @copyright  Copyright (c) 2019
- * @author     Michael Fleischmann
- * @license    MIT
- * @link       http://github.com/thescrat/contao-loginlink
- */
-
 namespace Thescrat\LoginLinkBundle\EventListener;
 
 use Contao\CoreBundle\Monolog\ContaoContext;
@@ -16,6 +7,7 @@ use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\FrontendUser;
 use Contao\MemberModel;
 use Contao\Input;
+use Contao\Config;
 use Contao\Controller;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
@@ -151,6 +143,10 @@ class GeneratePageListener
 
     public function onCreateNewUser(int $userId, array $data): void
     {
+        // check settings if autokey is set
+        if(!Config::get('login_link_autoKey'))
+            return;
+
         global $objPage;
 
         $pageModel = PageModel::findById($objPage->rootId);
@@ -159,7 +155,7 @@ class GeneratePageListener
             return;
         }
 
-        $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,$pageModel->loginlink_length);
+        $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,null != \Config::get('loginlink_length') ? \Config::get('loginlink_length') : 25);
 
         try {
             $this->connection->createQueryBuilder()
