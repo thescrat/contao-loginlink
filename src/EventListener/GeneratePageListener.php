@@ -158,13 +158,9 @@ class GeneratePageListener
         $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,null != \Config::get('loginlink_length') ? \Config::get('loginlink_length') : 25);
 
         try {
-            $this->connection->createQueryBuilder()
-                ->update('tl_member')
-                ->set('loginLink', ':loginLink')
-                ->where('id=:id')
-                ->setParameter('id', $userId)
-                ->setParameter(':loginLink', $strLoginLink)
-                ->executeQuery();
+            $objMember = MemberModel::findByPk($userId);
+            $objMember->loginLink = $strLoginLink;
+            $objMember->save();
         } catch (Exception $e) {
             return;
         }
