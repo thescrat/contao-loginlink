@@ -125,7 +125,7 @@ class GeneratePageListener
 
             $objMember = MemberModel::findBy('loginLink',$this->loginKey);
 
-            if(NULL === $objMember) {
+            if(NULL === $objMember || $objMember->login == '') {
                 return;
             }
 
