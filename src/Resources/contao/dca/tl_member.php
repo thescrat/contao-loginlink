@@ -48,7 +48,7 @@ class tl_loginLink extends Backend
 
         // set default-length
         $intLength = null != Config::get('login_link_defaultKeyLength') ? Config::get('login_link_defaultKeyLength') : 25;
-        $strKey = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,50);
+        $strKey = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,$intLength);
 
         if(null == MemberModel::findBy('loginLink',$strKey))
             return $strKey;
