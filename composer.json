@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.4 | ^8.0",
         "contao/core-bundle": "^4.13",
-        "psr/log": "^1.0"
+        "psr/log": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
         "contao/manager-plugin": "~2.0",
