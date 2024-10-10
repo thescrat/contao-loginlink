@@ -1,14 +1,5 @@
 <?php
 
-/*
- * LoginLink extension for Contao Open Source CMS
- *
- * @copyright  Copyright (c) 2019
- * @author     Michael Fleischmann
- * @license    MIT
- * @link       http://github.com/thescrat/contao-loginlink
- */
-
 namespace Thescrat\LoginLinkBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;

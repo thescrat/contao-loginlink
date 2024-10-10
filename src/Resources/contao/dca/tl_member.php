@@ -43,7 +43,6 @@ $palette->applyToPalette('default', 'tl_member');
 
 class tl_loginLink extends Backend
 {
-	protected $authKey = '';
 
     protected function generateUniqueKey(){
 
@@ -55,7 +54,7 @@ class tl_loginLink extends Backend
             return $strKey;
 
         $this->generateUniqueKey();
-		}
+    }
 
     public function onLoadGenerateKey($varValue, DataContainer $dc){
 
