@@ -4,6 +4,8 @@
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\ArrayUtil;
 use Contao\Config;
+use Contao\Backend;
+use Contao\MemberModel;
 
 ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_member']['fields'],count($GLOBALS['TL_DCA']['tl_member']['fields']),array
 (
@@ -56,7 +58,7 @@ class tl_loginLink extends Backend
         $this->generateUniqueKey();
     }
 
-    public function onLoadGenerateKey($varValue, DataContainer $dc){
+    public function onLoadGenerateKey($varValue, $dc){
 
             //check if key exist AND autokey is set (Settings)
             if(!strlen($varValue) && Config::get('login_link_autoKey'))
@@ -64,7 +66,7 @@ class tl_loginLink extends Backend
             return $varValue;
     }
 
-	public function generateNewLoginKey($varValue, DataContainer $dc)
+	public function generateNewLoginKey($varValue, $dc)
 	{
 		if($varValue):
             $objMember = MemberModel::findById($dc->id);

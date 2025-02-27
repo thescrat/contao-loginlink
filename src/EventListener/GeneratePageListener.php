@@ -5,11 +5,13 @@ namespace Thescrat\LoginLinkBundle\EventListener;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\FrontendUser;
+use Contao\Idna;
 use Contao\MemberModel;
 use Contao\Input;
 use Contao\Config;
 use Contao\Controller;
 use Contao\PageModel;
+use Contao\System;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
@@ -191,17 +193,16 @@ class GeneratePageListener
             return;
         }
 
-        $usernamePasswordToken = new UsernamePasswordToken($user, null, 'frontend', $user->getRoles());
+        $usernamePasswordToken = new UsernamePasswordToken($user, 'contao_frontend', $user->getRoles());
         $this->tokenStorage->setToken($usernamePasswordToken);
 
 
         $event = new InteractiveLoginEvent($this->requestStack->getCurrentRequest(), $usernamePasswordToken);
         $this->eventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
 
-        $this->logger->log(
-            LogLevel::INFO,
-            'User "'.$username.'" was logged in by LoginLink',
-            ['contao' => new ContaoContext(__METHOD__, TL_ACCESS)]
-        );
+        // Log
+        $container = System::getContainer();
+        $container->get('monolog.logger.contao.access')->info('Member "'.$username.'" was logged in by LoginLink',);
+
     }
 }
