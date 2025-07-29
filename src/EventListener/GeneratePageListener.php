@@ -157,7 +157,7 @@ class GeneratePageListener
             return;
         }
 
-        $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,null != \Config::get('login_link_defaultKeyLength') ? \Config::get('login_link_defaultKeyLength') : 25);
+        $strLoginLink = substr(uniqid(mt_rand()).uniqid(mt_rand()),0,null != Config::get('login_link_defaultKeyLength') ? Config::get('login_link_defaultKeyLength') : 25);
 
         try {
             $objMember = MemberModel::findByPk($userId);
