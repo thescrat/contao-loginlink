@@ -13,7 +13,7 @@ ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_member']['fields'],count($GLOBALS[
 	[
 		'label'     	=>  &$GLOBALS['TL_LANG']['tl_member']['loginLink'],
 		'inputType'     => 'text',
-		'eval'      	=> ['minlength'=> 10, 'unique' => true, 'tl_class'=>'w50'],
+		'eval'      	=> ['minlength'=> 6, 'unique' => true, 'tl_class'=>'w50'],
         'load_callback' =>
         [
             ['tl_loginLink','onLoadGenerateKey']
