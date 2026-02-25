@@ -32,7 +32,7 @@ ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_settings'], count($GLOBALS['TL_DCA
             'label' => &$GLOBALS['TL_LANG']['tl_settings']['login_link_defaultKeyLength'],
             'default' => '25',
             'inputType' => 'select',
-            'options' => range(10, 50),
+            'options' => range(6, 50),
             'eval' => ['tl_class' => 'clr']
         ],
     ]
