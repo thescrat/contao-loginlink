@@ -14,7 +14,6 @@
         "forum": "https://community.contao.org"
     },
     "require": {
-        "php": "^7.4 || ^8.0 || ^8.1 || ^8.2 || ^8.3",
         "contao/core-bundle": "^4.13 || ^5.0",
         "psr/log": "^1.0 || ^2.0 || ^3.0"
     },
